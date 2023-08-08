@@ -7,6 +7,15 @@ package net.media.training.designpattern.strategy;
  * Time: 1:31:37 PM
  * To change this template use File | Settings | File Templates.
  */
+
+/*
+ * Company Member- Main functions
+ * Employee extends Generic. Methods- setSalary, setMonthsSpent, setMaxLeaves
+ * Generic extends CompanyMember. Methods- Salary, MonthsSpent, ManagerName
+ * Manager extends CompanyMember. Methods- Salary, MonthsSpent, ManagementBand
+ * Senior extends Generic. Methods- Salary, MonthsSpent, MaxBonus
+ */
+
 public class Employee extends GenericEmployee {
     private int maxAllowedLeaves;
 
@@ -23,7 +32,7 @@ public class Employee extends GenericEmployee {
     }
 
     public void setMaxAllowedLeaves(int leaves) {
-        atLeast(leaves, 1);
+        atLeastValidator.validate(new int[]{leaves, 1});
         this.maxAllowedLeaves = leaves;
     }
 }

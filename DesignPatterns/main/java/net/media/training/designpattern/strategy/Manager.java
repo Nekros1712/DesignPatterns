@@ -21,7 +21,7 @@ public class Manager extends CompanyMember {
     }
 
     public void setManagementBand(String managementBand) {
-        notEmpty(managementBand);
+        notEmptyValidator.validate(managementBand);
         this.managementBand = managementBand;
     }
 }

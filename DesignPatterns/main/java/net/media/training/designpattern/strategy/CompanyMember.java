@@ -1,5 +1,7 @@
 package net.media.training.designpattern.strategy;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: goyalamit
@@ -7,42 +9,27 @@ package net.media.training.designpattern.strategy;
  * Time: 1:14:31 PM
  * To change this template use File | Settings | File Templates.
  */
-public abstract class CompanyMember {
+
+public abstract class CompanyMember implements EmployeeInterface {
     private String name;
     protected String mgrName;
     protected int salary;
     protected int monthsSpent;
-
-    protected void validateLength(String val, int allowedLength) {
-        if (val.length() > allowedLength)
-            throw new RuntimeException("Invalid length:" + allowedLength);
-    }
-
-    protected void notEmpty(String val) {
-        if (val == null || val.length() == 0)
-            throw new RuntimeException("not empty check failed for value:" + val);
-    }
-
-    protected void atLeast(int val, int min) {
-        if (val < min)
-            throw new RuntimeException("at least check failed:" + val);
-    }
-
-    protected void atMost(int val, int max) {
-        if (val > max)
-            throw new RuntimeException("at least check failed:" + val);
-    }
+    protected Validator atLeastValidator = new AtLeastValidator();
+    protected Validator atMostValidator = new AtMostValidator();
+    protected Validator notEmptyValidator = new NotEmptyValidator();
+    protected Validator lengthValidator = new LengthValidator();
 
     public void setName(String name) {
-        validateLength(name, 50);
+        lengthValidator.validate(new Object[]{name, 50});
         this.name = name;
     }
 
     public void setSalary(int salary) {
-        atLeast(salary, 1);
+        atLeastValidator.validate(new int[]{salary, 1});
     }
 
     public void setManagerName(String name) {
-        validateLength(name, 50);
+        lengthValidator.validate(new Object[]{name, 50});
     }
 }

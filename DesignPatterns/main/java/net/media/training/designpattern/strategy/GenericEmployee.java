@@ -10,16 +10,16 @@ package net.media.training.designpattern.strategy;
 public abstract class GenericEmployee extends CompanyMember {
     public void setSalary(int salary) {
         super.setSalary(salary);
-        atMost(salary, 1000);
+        atMostValidator.validate(new int[] {salary, 1000});
     }
 
     public void setManagerName(String name) {
         super.setManagerName(name);
-        notEmpty(name);
+        notEmptyValidator.validate(name);
         this.mgrName = name;
     }
 
     public void setMonthsSpent(int months) {
-        atLeast(months, 0);
+        atLeastValidator.validate(new int[] {months, 0});
     }
 }

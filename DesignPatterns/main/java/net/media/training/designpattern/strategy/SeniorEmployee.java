@@ -13,19 +13,19 @@ public class SeniorEmployee extends GenericEmployee {
     @Override
     public void setSalary(int salary) {
         super.setSalary(salary);
-        atLeast(salary, 200);
+        atLeastValidator.validate(new int[]{salary, 200});
         this.salary = salary;
     }
 
     @Override
     public void setMonthsSpent(int months) {
         super.setMonthsSpent(months);
-        atLeast(months, 60);
+        atLeastValidator.validate(new int[] {months, 60});
         this.monthsSpent = months;
     }
 
     public void setMaxBonus(int bonus) {
-        atLeast(bonus, 1);
+        atLeastValidator.validate(new int[] {bonus, 1});
         this.setMaxBonus = bonus;
     }
 }
