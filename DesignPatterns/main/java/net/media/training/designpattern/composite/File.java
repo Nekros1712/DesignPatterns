@@ -7,18 +7,30 @@ package net.media.training.designpattern.composite;
  * Time: 9:18:04 PM
  * To change this template use pre_refactoring.File | Settings | pre_refactoring.File Templates.
  */
-public class File {
+public class File implements DataNode{
     private final String name;
     private int size;
-    private Directory parent;
+    private DataNode parent;
 
     public File(String name, int size) {
         this.name = name;
         this.size = size;
     }
 
-    public void setParent(Directory parent) {
+    public void setParent(DataNode parent) {
         this.parent = parent;
+    }
+
+    public DataNode getData() {
+        return null;
+    }
+
+    public void remove(DataNode dataEntity) {
+        this.getParent().remove(this);
+    }
+
+    public boolean exists(String name) {
+        return true;
     }
 
     public String getName() {

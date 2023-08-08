@@ -1,5 +1,6 @@
 package net.media.training.designpattern.composite;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,119 +8,57 @@ import java.util.List;
  * User: joelrosario
  * Date: Jul 19, 2011
  * Time: 9:18:51 PM
- * To change this template use pre_refactoring.File | Settings | pre_refactoring.File Templates.
+ * To change this template use pre_refactoring.File | Settings |
+ * pre_refactoring.File Templates.
  */
-public class Directory {
-    private final String name;
-    private final List<File> files;
-    private final List<Directory> directories;
+public class Directory implements DataNode {
+    private String name;
+    private List<DataNode> dataEntities;
     private Directory parent;
 
     public String getName() {
         return name;
     }
 
-    public Directory(String name, List<File> files, List<Directory> directories) {
+    public Directory(String name, List<DataNode> dataEntities) {
         this.name = name;
-        this.files = files;
-        this.directories = directories;
-
-        for (Directory directory : directories) {
-            directory.setParent(this);
-        }
-
-        for (File file : files) {
-            file.setParent(this);
-        }
+        this.dataEntities = dataEntities;
     }
 
-    public int getSize(Directory directoryToSize) {
+    public int getSize(DataNode dataEntity) {
+
         int sum = 0;
-
-        for (File file : directoryToSize.getFiles()) {
-            sum += file.getSize();
-        }
-
-        for (Directory directory : directoryToSize.getDirectories()) {
-            sum += getSize(directory);
-        }
-
-        return sum;
+        if (getContents(dataEntity)!=null) {
+            for (DataNode data : getContents(dataEntity)) {
+                sum += getSize(data);
+            } return sum;
+        } return 0;
     }
 
-    public int getSize() {
-        return getSize(this);
-    }
-
-    public void setParent(Directory directory) {
-        this.parent = directory;
-    }
-
-    public void delete(Directory directoryToDelete) {
-        while (directoryToDelete.getFiles().size() > 0) {
-            File file = directoryToDelete.getFiles().get(0);
-            file.getParent().removeEntry(file);
-        }
-
-        while (directoryToDelete.getDirectories().size() > 0) {
-            Directory directory = directoryToDelete.getDirectories().get(0);
-            delete(directory);
-        }
-
-        directoryToDelete.getParent().removeEntry(directoryToDelete);
+    public void setParent(Directory parent) {
+        this.parent = parent;
     }
 
     public void delete() {
-        delete(this);
-    }
-
-    public void removeEntry(File file) {
-        files.remove(file);
-    }
-
-    public void removeEntry(Directory directory) {
-        directories.remove(directory);
-    }
-
-    public void add(Directory directory) {
-        directories.add(directory);
-    }
-
-    private boolean fileExists(String name, Directory directoryToSearch) {
-        for (File file : directoryToSearch.getFiles()) {
-            if (file.getName().equals(name)) {
-                return true;
-            }
+        while (dataEntities.size() > 0) {
+            DataNode dataEntity = dataEntities.get(0);
+            dataEntity.getParent().remove(dataEntity);
         }
 
-        for (Directory directory : directoryToSearch.getDirectories()) {
-            if (fileExists(name, directory))
-                return true;
+        if (parent != null) {
+            parent.dataEntities.remove(this);
         }
-
-        return false;
     }
 
-    public boolean fileExists(String name) {
-        return fileExists(name, this);
+    public void add(DataNode dataEntity) {
+        dataEntities.add(dataEntity);
     }
 
-    public boolean directoryExists(String name) {
-        return directoryExists(name, this);
-    }
-
-    private boolean directoryExists(String name, Directory directoryToSearch) {
-        if (directoryToSearch.getName().equals(name))
-            return true;
-
-        for (Directory directory : directoryToSearch.getDirectories()) {
-            if (directory.getName().equals(name)) {
+    public boolean exists(String name) {
+        for (DataNode dataEntity : dataEntities) {
+            if (dataEntity instanceof File && dataEntity.exists(name)) {
                 return true;
-            }
-        }
-
-        for (Directory directory : directories) {
-            if (directory.fileExists(name)) {
+            } else if (dataEntity instanceof Directory && dataEntity.exists(name)) {
                 return true;
             }
         }
@@ -127,15 +66,24 @@ public class Directory {
         return false;
     }
 
-    public List<File> getFiles() {
-        return files;
-    }
-
-    public List<Directory> getDirectories() {
-        return directories;
+    public List<DataNode> getContents(DataNode data) {
+        return this.dataEntities;
     }
 
     public Directory getParent() {
         return parent;
     }
+
+    public void setParent(DataNode directory) {
+
+    }
+
+    public DataNode getData() {
+        return null;
+    }
+
+    public void remove(DataNode dataEntity) {
+
+    }
+
 }
