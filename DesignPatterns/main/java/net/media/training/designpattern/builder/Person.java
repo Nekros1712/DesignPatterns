@@ -1,12 +1,5 @@
 package net.media.training.designpattern.builder;
 
-/**
- * Created by IntelliJ IDEA.
- * User: path
- * Date: Jul 19, 2011
- * Time: 11:31:11 PM
- * To change this template use File | Settings | File Templates.
- */
 public class Person {
     private String name;
     private int id;

@@ -16,4 +16,8 @@ public class IphoneFactory implements PhoneFactory {
     public Processor createProcessor() {
         return new IphoneProcessor();
     }
+
+    public Battery createBattery() {
+        return new IphoneBattery();
+    }
 }

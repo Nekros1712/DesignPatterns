@@ -14,9 +14,10 @@ public class PeopleDataSource {
         String finalXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
         finalXML += "<People number=\"" + persons.size() + "\">";
         for (Person person : persons) {
-            finalXML += "<Person id=\"" + person.getId() + "\" name=\"" + person.getName() + "\">" +
-                    "<Address><City>" + person.getCity() + "</City><Country>" + person.getCountry() + "</Country></Address>" +
-                    "</Person>";
+            finalXML += new PersonXMLBuilder(person)
+                        .appendPersonalDetail()
+                        .appendAddress()
+                        .buildXML();
         }
         finalXML += "</People>";
         return finalXML;

@@ -12,7 +12,8 @@ public class PhoneMaker {
     public Case buildPhone(PhoneFactory phone) {
         MotherBoard motherBoard;
         motherBoard = phone.createMotherBoard();
-        motherBoard.attachBattery(new Battery());
+        Battery battery = phone.createBattery();
+        motherBoard.attachBattery(battery);
 
         Processor processor = phone.createProcessor();
         motherBoard.attachProcessor(processor);

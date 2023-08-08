@@ -5,4 +5,5 @@ public interface PhoneFactory {
     Screen createScreen();
     MotherBoard createMotherBoard();
     Processor createProcessor();
+    Battery createBattery();
 }
