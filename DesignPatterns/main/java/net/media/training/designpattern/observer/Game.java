@@ -10,6 +10,7 @@ package net.media.training.designpattern.observer;
 public class Game {
     private Sun sun;
 
+
     public Game(Sun sun) {
         this.sun = sun;
     }
